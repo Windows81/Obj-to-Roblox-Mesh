@@ -5,24 +5,25 @@
 
 int main(int argc, char* argv[])
 {
-	for (int i = 1; i < argc; ++i)
+	if (argc == 1) {
+		std::cout << "Usage: " << argv[0] << " file... [1.00 | 1.01 | 2.00]";
+		return EXIT_FAILURE;
+	}
+
+	std::string ver = argv[argc - 1];
+	if (ver.compare("1.00") || ver.compare("1.01") || ver.compare("2.00") != 0) {
+		std::cout << "ERROR: Invaild version specified!\nMake sure the version specified is 1.00, 1.01 or 2.00";
+		return EXIT_FAILURE;
+	}
+
+	for (int i = 1; i < argc - 1; ++i)
 	{
-		std::string arg = argv[1];
+		std::string arg = argv[i];
 
 		objl::Loader obj;
 		if (!obj.LoadFile(arg))
 		{
 			std::cout << "ERROR: Could not load \"" << arg << "\"!";
-			return EXIT_FAILURE;
-		}
-
-		if (argv[2] == NULL) {
-			std::cout << "ERROR: Mesh version must be present!";
-			return EXIT_FAILURE;
-		}
-		std::string ver = argv[2];
-		if (ver.compare("1.00") || ver.compare("1.01") || ver.compare("2.00") != 0) {
-			std::cout << "ERROR: Invaild version specified!\nMake sure the version specified is 1.00, 1.01 or 2.00";
 			return EXIT_FAILURE;
 		}
 
