@@ -27,7 +27,7 @@ void RobloxMesh::Write(std::ostream& stream, std::string ver)
 
 				stream << "[";
 				stream << vert.tu << ",";
-				stream << vert.tv << ",";
+				stream << (1.0 - vert.tv) << ",";
 				stream << "0]";
 			}
 		}
