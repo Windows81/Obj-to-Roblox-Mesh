@@ -6,27 +6,30 @@ void RobloxMesh::Write(std::ostream& stream, std::string ver)
 	{
 		int scale = (ver == "1.00") ? 2 : 1;
 
-		stream << "version " << ver << std::endl;
-		stream << faces.size() << std::endl;
+		stream << "version " << ver << "\r\n";
+		stream << faces.size() << "\r\n";
 
-		for (int i = 0; i < vertices.size(); ++i)
+		for (Face face : faces)
 		{
-			Vertex vert = vertices[i];
+			for (uint32_t i : {face.a, face.b, face.c})
+			{
+				Vertex vert = vertices[i];
 
-			stream << "[";
-			stream << vert.vx * scale << ",";
-			stream << vert.vy * scale << ",";
-			stream << vert.vz * scale << "]";
+				stream << "[";
+				stream << vert.vx * scale << ",";
+				stream << vert.vy * scale << ",";
+				stream << vert.vz * scale << "]";
 
-			stream << "[";
-			stream << vert.nx << ",";
-			stream << vert.ny << ",";
-			stream << vert.nz << "]";
+				stream << "[";
+				stream << vert.nx << ",";
+				stream << vert.ny << ",";
+				stream << vert.nz << "]";
 
-			stream << "[";
-			stream << vert.tu << ",";
-			stream << vert.tv << ",";
-			stream << "0]";
+				stream << "[";
+				stream << vert.tu << ",";
+				stream << vert.tv << ",";
+				stream << "0]";
+			}
 		}
 	}
 	else if (ver == "2.00")
@@ -46,7 +49,7 @@ void RobloxMesh::Write(std::ostream& stream, std::string ver)
 		header.vertexCount = vertices.size();
 		header.faceCount = faces.size();
 
-		stream << "version " << ver << std::endl;
+		stream << "version " << ver << "\r\n";
 		stream.write((char*)&header, sizeof(header));
 		stream.write((char*)vertices.data(), vertices.size() * sizeof(Vertex));
 		stream.write((char*)faces.data(), faces.size() * sizeof(Face));
