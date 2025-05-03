@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 	}
 
 	std::string ver = argv[argc - 1];
-	if (ver.compare("1.00") && ver.compare("1.01") && ver.compare("2.00") != 0) {
+	if (ver.compare("1.00") && ver.compare("1.01") && ver.compare("2.00")) {
 		std::cout << "ERROR: Invaild version specified!\nMake sure the version specified is 1.00, 1.01 or 2.00";
 		return EXIT_FAILURE;
 	}
